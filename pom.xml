@@ -45,7 +45,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<finalName>crypto-0.0.1-SNAPSHOT.jar</finalName>
+		<!--finalName>crypto-image</finalName-->
 	</build>
 
 </project>

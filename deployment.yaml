@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: cicd-crypto
+    app.kubernetes.io/instance: cicd-crypto-instance
+    app.kubernetes.io/version: '1.0.0'
+    app.kubernetes.io/managed-by: kubectl
+  name: cicd-crypto-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cicd-crypto
+  template:
+    metadata:
+      labels:
+        app: cicd-crypto
+    spec:
+      containers:
+        - image: 016896183794.dkr.ecr.us-west-2.amazonaws.com/cicd-crypto:latest
+          imagePullPolicy: Always
+          name: cicd-crypto
+          ports:
+            - containerPort: 8080

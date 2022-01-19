@@ -1,7 +1,7 @@
 # This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-name: Java CI with Maven
+name: Build and Push Golang Image to AWS ECR
 
 on:
   push:
@@ -10,8 +10,8 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-
+  build-and-push:
+    name: Build and Push to ECR
     runs-on: ubuntu-latest
 
     steps:
@@ -25,12 +25,23 @@ jobs:
     - name: Build with Maven
       run: mvn clean package -DskipTests
 
-    - name: Build & push Docker image
-      uses: mr-smithers-excellent/docker-build-push@v5
+  - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
       with:
-        image: harithagaje/crypto-image
-        tags: latest
-        registry: docker.io
-        dockerfile: Dockerfile
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-west-2
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, Tag, and Push the Image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: cicd-crypto
+          IMAGE_TAG: latest
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG

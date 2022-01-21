@@ -12,19 +12,3 @@ services:
       - database
     ports:
       - "8080:8080"
-    environment:
-      -  DB_HOST=database
-      -  DB_PORT=5431
-      -  DB_DATABASE=crypto
-      -  DB_USER=postgres
-      -  DB_PASSWORD=Ilovemessi2149
-
-  #database:
-  #  container_name: cryptodatabase
-   # image: 'postgres:14.1'
-    #environment:
-     # - POSTGRES_USER=postgres
-      #- POSTGRES_PASSWORD=Ilovemessi2149
-      #- POSTGRES_DB=crypto
-    #ports:
-     # - "5432:5432"

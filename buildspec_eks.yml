@@ -16,6 +16,7 @@ phases:
       - kubectl version --short --client
       - chmod +x prereqs.sh
       - sh prereqs.sh
+      - mvn install
 
   pre_build:
     commands:

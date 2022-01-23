@@ -6,7 +6,6 @@ phases:
   install:
     commands:
       - echo Installing app dependencies...
-      #- curl -O https://www.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
       - curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.18.9/2020-11-02/bin/linux/amd64/kubectl   
       - chmod +x ./kubectl
       - mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
@@ -16,7 +15,6 @@ phases:
       - kubectl version --short --client
       - chmod +x prereqs.sh
       - sh prereqs.sh
-      #- mvn test
       - wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
       - sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
       - yum install -y apache-maven
@@ -38,8 +36,8 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      #- mvn clean package -DskipTests
-      - mvn clean
+      - mvn clean package -DskipTests
+      #- mvn clean
       - echo Building the Docker image...          
       - docker build --cache-from $REPOSITORY_URI:$IMAGE_TAG -t $IMAGE_REPO_NAME:$IMAGE_TAG .
       - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG 

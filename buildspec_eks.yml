@@ -15,10 +15,9 @@ phases:
       - kubectl version --short --client
       - chmod +x prereqs.sh
       - sh prereqs.sh
-      - wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
+      - wget https://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
       - sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
       - yum install -y apache-maven
-      - echo mvn `version`
       - mvn -v
 
   pre_build:

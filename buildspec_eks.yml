@@ -18,7 +18,6 @@ phases:
       - wget https://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
       - sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
       - yum install -y apache-maven
-      - mvn -v
 
   pre_build:
     commands:
@@ -39,7 +38,7 @@ phases:
       - echo Build started on `date`
       - mvn -v
       - mvn clean package -DskipTests
-      #- mvn clean install
+      #- mvn  install
       - echo Building the Docker image....
       - docker build --cache-from $REPOSITORY_URI:$IMAGE_TAG -t $IMAGE_REPO_NAME:$IMAGE_TAG .
       - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG 

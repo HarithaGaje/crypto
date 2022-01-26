@@ -18,7 +18,7 @@ public class CryptoConfig {
     CommandLineRunner commandLineRunner(CryptoRepository repository){
         return  args -> {
             Crypto gaje = new Crypto(
-                    "Haritha333333",
+                    "Harithaaaa111",
                     "gaje@gmail.com",
                     LocalDate.of(2000, JANUARY,5)
             );
